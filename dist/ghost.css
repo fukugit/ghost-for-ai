@@ -1,0 +1,789 @@
+/*!
+ * ghost-for-ai v0.1.0
+ * Lightweight CSS components and animations for AI-powered interfaces.
+ * https://github.com/fukumayouhei/ghost-for-ai
+ * MIT License
+ */
+
+/* Base */
+
+/*
+ * Color palette: https://colorhunt.co/palette/eb4c4cff7070ffa6a6ffedc7
+ *
+ *   #EB4C4C  — primary red
+ *   #FF7070  — light coral
+ *   #FFA6A6  — soft pink
+ *   #FFEDC7  — warm cream
+ */
+
+:root {
+  /* Brand palette */
+  --ghost-palette-red:    #eb4c4c;
+  --ghost-palette-coral:  #ff7070;
+  --ghost-palette-pink:   #ffa6a6;
+  --ghost-palette-cream:  #ffedc7;
+
+  /* Primary */
+  --ghost-color-primary:       #eb4c4c;
+  --ghost-color-primary-hover: #d43c3c;
+  --ghost-color-primary-light: #ffa6a6;
+  --ghost-color-primary-muted: #ffedc7;
+
+  /* Semantic */
+  --ghost-color-secondary: #8b6f6f;
+  --ghost-color-success:   #2d9e6b;
+  --ghost-color-warning:   #d97706;
+  --ghost-color-danger:    #c0392b;
+  --ghost-color-info:      #2e7bb4;
+
+  /* Neutral — warm-tinted */
+  --ghost-color-bg:          #fffaf8;
+  --ghost-color-surface:     #fff4f0;
+  --ghost-color-border:      #f5c8c8;
+  --ghost-color-text:        #2d1a1a;
+  --ghost-color-text-muted:  #8b6f6f;
+  --ghost-color-text-inverse:#ffffff;
+
+  /* Skeleton */
+  --ghost-skeleton-base:  #ffd4d4;
+  --ghost-skeleton-shine: #fff0f0;
+
+  /* Typography */
+  --ghost-font-sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --ghost-font-mono: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+  --ghost-font-size-xs:   0.75rem;
+  --ghost-font-size-sm:   0.875rem;
+  --ghost-font-size-base: 1rem;
+  --ghost-font-size-lg:   1.125rem;
+
+  /* Spacing */
+  --ghost-radius-sm:   0.25rem;
+  --ghost-radius:      0.375rem;
+  --ghost-radius-lg:   0.5rem;
+  --ghost-radius-xl:   0.75rem;
+  --ghost-radius-full: 9999px;
+
+  /* Shadows — warm tint */
+  --ghost-shadow-sm: 0 1px 2px 0 rgb(235 76 76 / 0.08);
+  --ghost-shadow:    0 1px 3px 0 rgb(235 76 76 / 0.12), 0 1px 2px -1px rgb(235 76 76 / 0.08);
+
+  /* Transitions */
+  --ghost-transition:      150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --ghost-transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Animation durations */
+  --ghost-anim-pulse:  2s;
+  --ghost-anim-typing: 1.2s;
+  --ghost-anim-fade:   0.3s;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ghost-color-bg:         #1a0f0f;
+    --ghost-color-surface:    #2a1616;
+    --ghost-color-border:     #4a2424;
+    --ghost-color-text:       #ffedc7;
+    --ghost-color-text-muted: #c08080;
+
+    --ghost-skeleton-base:  #3a1e1e;
+    --ghost-skeleton-shine: #4a2828;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.ghost-btn,
+.ghost-badge,
+.ghost-table,
+.ghost-card {
+  font-family: var(--ghost-font-sans);
+  font-size: var(--ghost-font-size-base);
+  line-height: 1.5;
+  color: var(--ghost-color-text);
+}
+
+/* Animations (keyframes first) */
+
+/* ─── Shared Keyframes ────────────────────────────── */
+
+@keyframes ghost-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ghost-pulse-opacity {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+@keyframes ghost-pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(0.6); opacity: 0.5; }
+}
+
+@keyframes ghost-skeleton-shine {
+  to { background-position: 200% center; }
+}
+
+@keyframes ghost-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ghost-fade-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-4px); }
+}
+
+@keyframes ghost-slide-in-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ghost-slide-in-right {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes ghost-typing-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes ghost-typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%            { transform: translateY(-6px); }
+}
+
+@keyframes ghost-stream {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+
+/* ─── Ghost / Skeleton Loading ────────────────────── */
+
+.ghost-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--ghost-skeleton-base) 25%,
+    var(--ghost-skeleton-shine) 50%,
+    var(--ghost-skeleton-base) 75%
+  );
+  background-size: 200% 100%;
+  animation: ghost-skeleton-shine 1.5s ease-in-out infinite;
+  border-radius: var(--ghost-radius);
+  color: transparent;
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+/* Preset skeleton shapes */
+
+.ghost-skeleton--text {
+  height: 1em;
+  border-radius: var(--ghost-radius-sm);
+}
+
+.ghost-skeleton--title {
+  height: 1.5em;
+  border-radius: var(--ghost-radius-sm);
+}
+
+.ghost-skeleton--circle {
+  border-radius: var(--ghost-radius-full);
+  aspect-ratio: 1;
+}
+
+.ghost-skeleton--avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--ghost-radius-full);
+}
+
+.ghost-skeleton--button {
+  height: 2.25rem;
+  border-radius: var(--ghost-radius);
+}
+
+.ghost-skeleton--badge {
+  height: 1.25rem;
+  border-radius: var(--ghost-radius-full);
+}
+
+.ghost-skeleton--card {
+  height: 8rem;
+  border-radius: var(--ghost-radius-xl);
+  width: 100%;
+}
+
+/* ─── Typing Indicator (3 dots) ───────────────────── */
+
+.ghost-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--ghost-color-surface);
+  border: 1px solid var(--ghost-color-border);
+  border-radius: var(--ghost-radius-xl);
+  border-bottom-left-radius: var(--ghost-radius-sm);
+}
+
+.ghost-typing__dot {
+  display: inline-block;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: var(--ghost-radius-full);
+  background-color: var(--ghost-color-text-muted);
+  animation: ghost-typing-bounce var(--ghost-anim-typing) ease-in-out infinite;
+}
+
+.ghost-typing__dot:nth-child(2) { animation-delay: 0.15s; }
+
+.ghost-typing__dot:nth-child(3) { animation-delay: 0.30s; }
+
+/* ─── Cursor Blink ────────────────────────────────── */
+
+.ghost-cursor::after {
+  content: '|';
+  display: inline-block;
+  color: var(--ghost-color-primary);
+  font-weight: 300;
+  animation: ghost-typing-blink 1s step-end infinite;
+  margin-left: 1px;
+}
+
+/* ─── Stream (text reveal) ────────────────────────── */
+
+.ghost-stream {
+  animation: ghost-stream var(--ghost-transition-slow) ease-out forwards;
+}
+
+/* ─── Fade Utilities ──────────────────────────────── */
+
+.ghost-fade-in {
+  animation: ghost-fade-in var(--ghost-anim-fade) ease-out forwards;
+}
+
+.ghost-fade-out {
+  animation: ghost-fade-out var(--ghost-anim-fade) ease-in forwards;
+}
+
+.ghost-slide-in-up {
+  animation: ghost-slide-in-up var(--ghost-anim-fade) ease-out forwards;
+}
+
+.ghost-slide-in-right {
+  animation: ghost-slide-in-right var(--ghost-anim-fade) ease-out forwards;
+}
+
+/* Staggered children */
+
+.ghost-stagger > * {
+  animation: ghost-fade-in var(--ghost-anim-fade) ease-out both;
+}
+
+.ghost-stagger > *:nth-child(1)  { animation-delay: 0.05s; }
+
+.ghost-stagger > *:nth-child(2)  { animation-delay: 0.10s; }
+
+.ghost-stagger > *:nth-child(3)  { animation-delay: 0.15s; }
+
+.ghost-stagger > *:nth-child(4)  { animation-delay: 0.20s; }
+
+.ghost-stagger > *:nth-child(5)  { animation-delay: 0.25s; }
+
+.ghost-stagger > *:nth-child(6)  { animation-delay: 0.30s; }
+
+.ghost-stagger > *:nth-child(7)  { animation-delay: 0.35s; }
+
+.ghost-stagger > *:nth-child(8)  { animation-delay: 0.40s; }
+
+/* Pulse (attention) */
+
+.ghost-pulse {
+  animation: ghost-pulse-opacity var(--ghost-anim-pulse) ease-in-out infinite;
+}
+
+/* Components */
+
+/* ─── Button Base ─────────────────────────────────── */
+
+.ghost-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: var(--ghost-font-size-sm);
+  font-weight: 500;
+  line-height: 1.25;
+  border: 1px solid transparent;
+  border-radius: var(--ghost-radius);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--ghost-transition),
+    border-color var(--ghost-transition),
+    color var(--ghost-transition),
+    box-shadow var(--ghost-transition),
+    opacity var(--ghost-transition);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  vertical-align: middle;
+}
+
+.ghost-btn:focus-visible {
+  outline: 2px solid var(--ghost-color-primary);
+  outline-offset: 2px;
+}
+
+/* ─── Variants ────────────────────────────────────── */
+
+.ghost-btn--primary {
+  background-color: var(--ghost-color-primary);
+  color: var(--ghost-color-text-inverse);
+}
+
+.ghost-btn--primary:hover {
+  background-color: var(--ghost-color-primary-hover);
+}
+
+.ghost-btn--secondary {
+  background-color: var(--ghost-color-surface);
+  color: var(--ghost-color-text);
+  border-color: var(--ghost-color-border);
+}
+
+.ghost-btn--secondary:hover {
+  background-color: var(--ghost-color-border);
+}
+
+.ghost-btn--ghost {
+  background-color: transparent;
+  color: var(--ghost-color-primary);
+  border-color: transparent;
+}
+
+.ghost-btn--ghost:hover {
+  background-color: color-mix(in srgb, var(--ghost-color-primary) 10%, transparent);
+}
+
+.ghost-btn--danger {
+  background-color: var(--ghost-color-danger);
+  color: var(--ghost-color-text-inverse);
+}
+
+.ghost-btn--danger:hover {
+  background-color: color-mix(in srgb, var(--ghost-color-danger) 85%, black);
+}
+
+.ghost-btn--success {
+  background-color: var(--ghost-color-success);
+  color: var(--ghost-color-text-inverse);
+}
+
+.ghost-btn--success:hover {
+  background-color: color-mix(in srgb, var(--ghost-color-success) 85%, black);
+}
+
+/* ─── Sizes ───────────────────────────────────────── */
+
+.ghost-btn--sm {
+  padding: 0.25rem 0.625rem;
+  font-size: var(--ghost-font-size-xs);
+  border-radius: var(--ghost-radius-sm);
+}
+
+.ghost-btn--lg {
+  padding: 0.75rem 1.5rem;
+  font-size: var(--ghost-font-size-lg);
+  border-radius: var(--ghost-radius-lg);
+}
+
+.ghost-btn--icon {
+  padding: 0.5rem;
+  aspect-ratio: 1;
+}
+
+/* ─── States ──────────────────────────────────────── */
+
+.ghost-btn:disabled,
+.ghost-btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Loading state */
+
+.ghost-btn--loading {
+  cursor: wait;
+  pointer-events: none;
+  position: relative;
+}
+
+.ghost-btn--loading::after {
+  content: '';
+  display: inline-block;
+  width: 0.875em;
+  height: 0.875em;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: ghost-spin 0.6s linear infinite;
+}
+
+/* ─── Badge Base ──────────────────────────────────── */
+
+.ghost-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  font-size: var(--ghost-font-size-xs);
+  font-weight: 500;
+  line-height: 1.5;
+  border-radius: var(--ghost-radius-full);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* ─── Variants ────────────────────────────────────── */
+
+.ghost-badge--primary {
+  background-color: color-mix(in srgb, var(--ghost-color-primary) 15%, transparent);
+  color: var(--ghost-color-primary);
+}
+
+.ghost-badge--secondary {
+  background-color: var(--ghost-color-surface);
+  color: var(--ghost-color-text-muted);
+  border: 1px solid var(--ghost-color-border);
+}
+
+.ghost-badge--success {
+  background-color: color-mix(in srgb, var(--ghost-color-success) 15%, transparent);
+  color: var(--ghost-color-success);
+}
+
+.ghost-badge--warning {
+  background-color: color-mix(in srgb, var(--ghost-color-warning) 15%, transparent);
+  color: var(--ghost-color-warning);
+}
+
+.ghost-badge--danger {
+  background-color: color-mix(in srgb, var(--ghost-color-danger) 15%, transparent);
+  color: var(--ghost-color-danger);
+}
+
+.ghost-badge--info {
+  background-color: color-mix(in srgb, var(--ghost-color-info) 15%, transparent);
+  color: var(--ghost-color-info);
+}
+
+/* ─── AI Status Badges ────────────────────────────── */
+
+.ghost-badge--thinking {
+  background-color: color-mix(in srgb, var(--ghost-color-primary) 12%, transparent);
+  color: var(--ghost-color-primary);
+}
+
+.ghost-badge--thinking::before {
+  content: '';
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: currentColor;
+  animation: ghost-pulse-dot var(--ghost-anim-pulse) ease-in-out infinite;
+}
+
+.ghost-badge--online::before {
+  content: '';
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--ghost-color-success);
+}
+
+.ghost-badge--offline::before {
+  content: '';
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--ghost-color-text-muted);
+}
+
+/* ─── Sizes ───────────────────────────────────────── */
+
+.ghost-badge--lg {
+  padding: 0.25rem 0.75rem;
+  font-size: var(--ghost-font-size-sm);
+}
+
+/* ─── Table Wrapper ───────────────────────────────── */
+
+.ghost-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--ghost-radius-lg);
+  border: 1px solid var(--ghost-color-border);
+  box-shadow: var(--ghost-shadow-sm);
+}
+
+/* ─── Table Base ──────────────────────────────────── */
+
+.ghost-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ghost-font-size-sm);
+  text-align: left;
+}
+
+.ghost-table thead {
+  background-color: var(--ghost-color-surface);
+}
+
+.ghost-table th {
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  color: var(--ghost-color-text-muted);
+  font-size: var(--ghost-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--ghost-color-border);
+  white-space: nowrap;
+}
+
+.ghost-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--ghost-color-border);
+  color: var(--ghost-color-text);
+  vertical-align: middle;
+}
+
+.ghost-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ─── Variants ────────────────────────────────────── */
+
+/* Striped */
+
+.ghost-table--striped tbody tr:nth-child(even) {
+  background-color: color-mix(in srgb, var(--ghost-color-surface) 60%, transparent);
+}
+
+/* Hover */
+
+.ghost-table--hover tbody tr {
+  transition: background-color var(--ghost-transition);
+}
+
+.ghost-table--hover tbody tr:hover {
+  background-color: color-mix(in srgb, var(--ghost-color-primary) 5%, transparent);
+}
+
+/* Compact */
+
+.ghost-table--compact th,
+.ghost-table--compact td {
+  padding: 0.5rem 0.75rem;
+}
+
+/* ─── Cell Helpers ────────────────────────────────── */
+
+.ghost-table td.ghost-table__cell--mono {
+  font-family: var(--ghost-font-mono);
+  font-size: var(--ghost-font-size-xs);
+}
+
+.ghost-table td.ghost-table__cell--muted {
+  color: var(--ghost-color-text-muted);
+}
+
+.ghost-table td.ghost-table__cell--actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ─── Skeleton rows ───────────────────────────────── */
+
+.ghost-table .ghost-skeleton {
+  display: inline-block;
+  height: 0.875rem;
+  border-radius: var(--ghost-radius-sm);
+}
+
+/* ─── Card Base ───────────────────────────────────── */
+
+.ghost-card {
+  background-color: var(--ghost-color-bg);
+  border: 1px solid var(--ghost-color-border);
+  border-radius: var(--ghost-radius-xl);
+  box-shadow: var(--ghost-shadow-sm);
+  overflow: hidden;
+}
+
+.ghost-card__header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--ghost-color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.ghost-card__title {
+  font-size: var(--ghost-font-size-base);
+  font-weight: 600;
+  color: var(--ghost-color-text);
+  margin: 0;
+}
+
+.ghost-card__body {
+  padding: 1.25rem;
+}
+
+.ghost-card__footer {
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--ghost-color-border);
+  background-color: var(--ghost-color-surface);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ─── AI Response Card ────────────────────────────── */
+
+.ghost-card--ai {
+  border-color: color-mix(in srgb, var(--ghost-color-primary) 30%, var(--ghost-color-border));
+}
+
+.ghost-card--ai .ghost-card__header {
+  background-color: color-mix(in srgb, var(--ghost-color-primary) 5%, var(--ghost-color-bg));
+}
+
+/* ─── Chat Container ──────────────────────────────── */
+
+.ghost-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-family: var(--ghost-font-sans);
+}
+
+/* ─── Message Row ─────────────────────────────────── */
+
+.ghost-chat__message {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  max-width: 80%;
+}
+
+.ghost-chat__message--user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.ghost-chat__message--ai {
+  align-self: flex-start;
+}
+
+/* ─── Avatar ──────────────────────────────────────── */
+
+.ghost-chat__avatar {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--ghost-radius-full);
+  background-color: var(--ghost-color-surface);
+  border: 1px solid var(--ghost-color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--ghost-font-size-xs);
+  font-weight: 600;
+  color: var(--ghost-color-text-muted);
+  overflow: hidden;
+}
+
+/* ─── Bubble ──────────────────────────────────────── */
+
+.ghost-chat__bubble {
+  padding: 0.625rem 0.875rem;
+  border-radius: var(--ghost-radius-xl);
+  font-size: var(--ghost-font-size-sm);
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.ghost-chat__message--user .ghost-chat__bubble {
+  background-color: var(--ghost-color-primary);
+  color: var(--ghost-color-text-inverse);
+  border-bottom-right-radius: var(--ghost-radius-sm);
+}
+
+.ghost-chat__message--ai .ghost-chat__bubble {
+  background-color: var(--ghost-color-surface);
+  color: var(--ghost-color-text);
+  border: 1px solid var(--ghost-color-border);
+  border-bottom-left-radius: var(--ghost-radius-sm);
+}
+
+/* ─── Timestamp ───────────────────────────────────── */
+
+.ghost-chat__time {
+  font-size: var(--ghost-font-size-xs);
+  color: var(--ghost-color-text-muted);
+  margin-top: 0.25rem;
+  padding: 0 0.25rem;
+}
+
+/* ─── Input Area ──────────────────────────────────── */
+
+.ghost-chat__input-wrap {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: var(--ghost-color-surface);
+  border: 1px solid var(--ghost-color-border);
+  border-radius: var(--ghost-radius-xl);
+  transition: border-color var(--ghost-transition);
+}
+
+.ghost-chat__input-wrap:focus-within {
+  border-color: var(--ghost-color-primary);
+}
+
+.ghost-chat__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--ghost-font-sans);
+  font-size: var(--ghost-font-size-sm);
+  color: var(--ghost-color-text);
+  resize: none;
+  min-height: 1.5rem;
+  max-height: 8rem;
+  line-height: 1.5;
+}
+
+.ghost-chat__input::-moz-placeholder {
+  color: var(--ghost-color-text-muted);
+}
+
+.ghost-chat__input::placeholder {
+  color: var(--ghost-color-text-muted);
+}

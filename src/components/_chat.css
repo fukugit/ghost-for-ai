@@ -1,0 +1,103 @@
+/* ─── Chat Container ──────────────────────────────── */
+.ghost-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-family: var(--ghost-font-sans);
+}
+
+/* ─── Message Row ─────────────────────────────────── */
+.ghost-chat__message {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  max-width: 80%;
+}
+
+.ghost-chat__message--user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.ghost-chat__message--ai {
+  align-self: flex-start;
+}
+
+/* ─── Avatar ──────────────────────────────────────── */
+.ghost-chat__avatar {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--ghost-radius-full);
+  background-color: var(--ghost-color-surface);
+  border: 1px solid var(--ghost-color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--ghost-font-size-xs);
+  font-weight: 600;
+  color: var(--ghost-color-text-muted);
+  overflow: hidden;
+}
+
+/* ─── Bubble ──────────────────────────────────────── */
+.ghost-chat__bubble {
+  padding: 0.625rem 0.875rem;
+  border-radius: var(--ghost-radius-xl);
+  font-size: var(--ghost-font-size-sm);
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.ghost-chat__message--user .ghost-chat__bubble {
+  background-color: var(--ghost-color-primary);
+  color: var(--ghost-color-text-inverse);
+  border-bottom-right-radius: var(--ghost-radius-sm);
+}
+
+.ghost-chat__message--ai .ghost-chat__bubble {
+  background-color: var(--ghost-color-surface);
+  color: var(--ghost-color-text);
+  border: 1px solid var(--ghost-color-border);
+  border-bottom-left-radius: var(--ghost-radius-sm);
+}
+
+/* ─── Timestamp ───────────────────────────────────── */
+.ghost-chat__time {
+  font-size: var(--ghost-font-size-xs);
+  color: var(--ghost-color-text-muted);
+  margin-top: 0.25rem;
+  padding: 0 0.25rem;
+}
+
+/* ─── Input Area ──────────────────────────────────── */
+.ghost-chat__input-wrap {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: var(--ghost-color-surface);
+  border: 1px solid var(--ghost-color-border);
+  border-radius: var(--ghost-radius-xl);
+  transition: border-color var(--ghost-transition);
+}
+.ghost-chat__input-wrap:focus-within {
+  border-color: var(--ghost-color-primary);
+}
+
+.ghost-chat__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--ghost-font-sans);
+  font-size: var(--ghost-font-size-sm);
+  color: var(--ghost-color-text);
+  resize: none;
+  min-height: 1.5rem;
+  max-height: 8rem;
+  line-height: 1.5;
+}
+.ghost-chat__input::placeholder {
+  color: var(--ghost-color-text-muted);
+}

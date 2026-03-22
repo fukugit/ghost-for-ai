@@ -80,7 +80,8 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+# dist is tracked for CDN/npm (ghost-for-ai builds dist/ intentionally)
+# dist
 
 # Gatsby files
 .cache/

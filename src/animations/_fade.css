@@ -1,0 +1,35 @@
+/* ─── Fade Utilities ──────────────────────────────── */
+
+.ghost-fade-in {
+  animation: ghost-fade-in var(--ghost-anim-fade) ease-out forwards;
+}
+
+.ghost-fade-out {
+  animation: ghost-fade-out var(--ghost-anim-fade) ease-in forwards;
+}
+
+.ghost-slide-in-up {
+  animation: ghost-slide-in-up var(--ghost-anim-fade) ease-out forwards;
+}
+
+.ghost-slide-in-right {
+  animation: ghost-slide-in-right var(--ghost-anim-fade) ease-out forwards;
+}
+
+/* Staggered children */
+.ghost-stagger > * {
+  animation: ghost-fade-in var(--ghost-anim-fade) ease-out both;
+}
+.ghost-stagger > *:nth-child(1)  { animation-delay: 0.05s; }
+.ghost-stagger > *:nth-child(2)  { animation-delay: 0.10s; }
+.ghost-stagger > *:nth-child(3)  { animation-delay: 0.15s; }
+.ghost-stagger > *:nth-child(4)  { animation-delay: 0.20s; }
+.ghost-stagger > *:nth-child(5)  { animation-delay: 0.25s; }
+.ghost-stagger > *:nth-child(6)  { animation-delay: 0.30s; }
+.ghost-stagger > *:nth-child(7)  { animation-delay: 0.35s; }
+.ghost-stagger > *:nth-child(8)  { animation-delay: 0.40s; }
+
+/* Pulse (attention) */
+.ghost-pulse {
+  animation: ghost-pulse-opacity var(--ghost-anim-pulse) ease-in-out infinite;
+}

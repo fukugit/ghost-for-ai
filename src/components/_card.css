@@ -1,0 +1,45 @@
+/* ─── Card Base ───────────────────────────────────── */
+.ghost-card {
+  background-color: var(--ghost-color-bg);
+  border: 1px solid var(--ghost-color-border);
+  border-radius: var(--ghost-radius-xl);
+  box-shadow: var(--ghost-shadow-sm);
+  overflow: hidden;
+}
+
+.ghost-card__header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--ghost-color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.ghost-card__title {
+  font-size: var(--ghost-font-size-base);
+  font-weight: 600;
+  color: var(--ghost-color-text);
+  margin: 0;
+}
+
+.ghost-card__body {
+  padding: 1.25rem;
+}
+
+.ghost-card__footer {
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--ghost-color-border);
+  background-color: var(--ghost-color-surface);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ─── AI Response Card ────────────────────────────── */
+.ghost-card--ai {
+  border-color: color-mix(in srgb, var(--ghost-color-primary) 30%, var(--ghost-color-border));
+}
+.ghost-card--ai .ghost-card__header {
+  background-color: color-mix(in srgb, var(--ghost-color-primary) 5%, var(--ghost-color-bg));
+}

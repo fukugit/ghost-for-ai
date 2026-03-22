@@ -1,0 +1,36 @@
+{
+  "name": "ghost-for-ai",
+  "version": "0.1.0",
+  "description": "Lightweight CSS components and animations designed for AI-powered interfaces.",
+  "main": "dist/ghost.css",
+  "style": "dist/ghost.css",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "postcss src/ghost.css -o dist/ghost.css && postcss src/ghost.css -o dist/ghost.min.css --env production",
+    "watch": "postcss src/ghost.css -o dist/ghost.css --watch",
+    "dev": "npm run watch"
+  },
+  "keywords": [
+    "css",
+    "animations",
+    "ui",
+    "components",
+    "ai",
+    "skeleton",
+    "loading",
+    "buttons",
+    "badges",
+    "tables"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "cssnano": "^7.0.6",
+    "postcss": "^8.4.49",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^16.1.0"
+  }
+}

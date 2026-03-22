@@ -1,0 +1,84 @@
+/* ─── Badge Base ──────────────────────────────────── */
+.ghost-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  font-size: var(--ghost-font-size-xs);
+  font-weight: 500;
+  line-height: 1.5;
+  border-radius: var(--ghost-radius-full);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* ─── Variants ────────────────────────────────────── */
+.ghost-badge--primary {
+  background-color: color-mix(in srgb, var(--ghost-color-primary) 15%, transparent);
+  color: var(--ghost-color-primary);
+}
+
+.ghost-badge--secondary {
+  background-color: var(--ghost-color-surface);
+  color: var(--ghost-color-text-muted);
+  border: 1px solid var(--ghost-color-border);
+}
+
+.ghost-badge--success {
+  background-color: color-mix(in srgb, var(--ghost-color-success) 15%, transparent);
+  color: var(--ghost-color-success);
+}
+
+.ghost-badge--warning {
+  background-color: color-mix(in srgb, var(--ghost-color-warning) 15%, transparent);
+  color: var(--ghost-color-warning);
+}
+
+.ghost-badge--danger {
+  background-color: color-mix(in srgb, var(--ghost-color-danger) 15%, transparent);
+  color: var(--ghost-color-danger);
+}
+
+.ghost-badge--info {
+  background-color: color-mix(in srgb, var(--ghost-color-info) 15%, transparent);
+  color: var(--ghost-color-info);
+}
+
+/* ─── AI Status Badges ────────────────────────────── */
+.ghost-badge--thinking {
+  background-color: color-mix(in srgb, var(--ghost-color-primary) 12%, transparent);
+  color: var(--ghost-color-primary);
+}
+.ghost-badge--thinking::before {
+  content: '';
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: currentColor;
+  animation: ghost-pulse-dot var(--ghost-anim-pulse) ease-in-out infinite;
+}
+
+.ghost-badge--online::before {
+  content: '';
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--ghost-color-success);
+}
+
+.ghost-badge--offline::before {
+  content: '';
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--ghost-color-text-muted);
+}
+
+/* ─── Sizes ───────────────────────────────────────── */
+.ghost-badge--lg {
+  padding: 0.25rem 0.75rem;
+  font-size: var(--ghost-font-size-sm);
+}

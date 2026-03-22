@@ -1,0 +1,82 @@
+/*
+ * Color palette: https://colorhunt.co/palette/eb4c4cff7070ffa6a6ffedc7
+ *
+ *   #EB4C4C  — primary red
+ *   #FF7070  — light coral
+ *   #FFA6A6  — soft pink
+ *   #FFEDC7  — warm cream
+ */
+
+:root {
+  /* Brand palette */
+  --ghost-palette-red:    #eb4c4c;
+  --ghost-palette-coral:  #ff7070;
+  --ghost-palette-pink:   #ffa6a6;
+  --ghost-palette-cream:  #ffedc7;
+
+  /* Primary */
+  --ghost-color-primary:       #eb4c4c;
+  --ghost-color-primary-hover: #d43c3c;
+  --ghost-color-primary-light: #ffa6a6;
+  --ghost-color-primary-muted: #ffedc7;
+
+  /* Semantic */
+  --ghost-color-secondary: #8b6f6f;
+  --ghost-color-success:   #2d9e6b;
+  --ghost-color-warning:   #d97706;
+  --ghost-color-danger:    #c0392b;
+  --ghost-color-info:      #2e7bb4;
+
+  /* Neutral — warm-tinted */
+  --ghost-color-bg:          #fffaf8;
+  --ghost-color-surface:     #fff4f0;
+  --ghost-color-border:      #f5c8c8;
+  --ghost-color-text:        #2d1a1a;
+  --ghost-color-text-muted:  #8b6f6f;
+  --ghost-color-text-inverse:#ffffff;
+
+  /* Skeleton */
+  --ghost-skeleton-base:  #ffd4d4;
+  --ghost-skeleton-shine: #fff0f0;
+
+  /* Typography */
+  --ghost-font-sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --ghost-font-mono: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+  --ghost-font-size-xs:   0.75rem;
+  --ghost-font-size-sm:   0.875rem;
+  --ghost-font-size-base: 1rem;
+  --ghost-font-size-lg:   1.125rem;
+
+  /* Spacing */
+  --ghost-radius-sm:   0.25rem;
+  --ghost-radius:      0.375rem;
+  --ghost-radius-lg:   0.5rem;
+  --ghost-radius-xl:   0.75rem;
+  --ghost-radius-full: 9999px;
+
+  /* Shadows — warm tint */
+  --ghost-shadow-sm: 0 1px 2px 0 rgb(235 76 76 / 0.08);
+  --ghost-shadow:    0 1px 3px 0 rgb(235 76 76 / 0.12), 0 1px 2px -1px rgb(235 76 76 / 0.08);
+
+  /* Transitions */
+  --ghost-transition:      150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --ghost-transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Animation durations */
+  --ghost-anim-pulse:  2s;
+  --ghost-anim-typing: 1.2s;
+  --ghost-anim-fade:   0.3s;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ghost-color-bg:         #1a0f0f;
+    --ghost-color-surface:    #2a1616;
+    --ghost-color-border:     #4a2424;
+    --ghost-color-text:       #ffedc7;
+    --ghost-color-text-muted: #c08080;
+
+    --ghost-skeleton-base:  #3a1e1e;
+    --ghost-skeleton-shine: #4a2828;
+  }
+}

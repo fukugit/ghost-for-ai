@@ -1,0 +1,54 @@
+/* ─── Ghost / Skeleton Loading ────────────────────── */
+
+.ghost-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--ghost-skeleton-base) 25%,
+    var(--ghost-skeleton-shine) 50%,
+    var(--ghost-skeleton-base) 75%
+  );
+  background-size: 200% 100%;
+  animation: ghost-skeleton-shine 1.5s ease-in-out infinite;
+  border-radius: var(--ghost-radius);
+  color: transparent;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Preset skeleton shapes */
+.ghost-skeleton--text {
+  height: 1em;
+  border-radius: var(--ghost-radius-sm);
+}
+
+.ghost-skeleton--title {
+  height: 1.5em;
+  border-radius: var(--ghost-radius-sm);
+}
+
+.ghost-skeleton--circle {
+  border-radius: var(--ghost-radius-full);
+  aspect-ratio: 1;
+}
+
+.ghost-skeleton--avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--ghost-radius-full);
+}
+
+.ghost-skeleton--button {
+  height: 2.25rem;
+  border-radius: var(--ghost-radius);
+}
+
+.ghost-skeleton--badge {
+  height: 1.25rem;
+  border-radius: var(--ghost-radius-full);
+}
+
+.ghost-skeleton--card {
+  height: 8rem;
+  border-radius: var(--ghost-radius-xl);
+  width: 100%;
+}

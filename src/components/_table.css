@@ -1,0 +1,85 @@
+/* ─── Table Wrapper ───────────────────────────────── */
+.ghost-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--ghost-radius-lg);
+  border: 1px solid var(--ghost-color-border);
+  box-shadow: var(--ghost-shadow-sm);
+}
+
+/* ─── Table Base ──────────────────────────────────── */
+.ghost-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ghost-font-size-sm);
+  text-align: left;
+}
+
+.ghost-table thead {
+  background-color: var(--ghost-color-surface);
+}
+
+.ghost-table th {
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  color: var(--ghost-color-text-muted);
+  font-size: var(--ghost-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--ghost-color-border);
+  white-space: nowrap;
+}
+
+.ghost-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--ghost-color-border);
+  color: var(--ghost-color-text);
+  vertical-align: middle;
+}
+
+.ghost-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ─── Variants ────────────────────────────────────── */
+
+/* Striped */
+.ghost-table--striped tbody tr:nth-child(even) {
+  background-color: color-mix(in srgb, var(--ghost-color-surface) 60%, transparent);
+}
+
+/* Hover */
+.ghost-table--hover tbody tr {
+  transition: background-color var(--ghost-transition);
+}
+.ghost-table--hover tbody tr:hover {
+  background-color: color-mix(in srgb, var(--ghost-color-primary) 5%, transparent);
+}
+
+/* Compact */
+.ghost-table--compact th,
+.ghost-table--compact td {
+  padding: 0.5rem 0.75rem;
+}
+
+/* ─── Cell Helpers ────────────────────────────────── */
+.ghost-table td.ghost-table__cell--mono {
+  font-family: var(--ghost-font-mono);
+  font-size: var(--ghost-font-size-xs);
+}
+
+.ghost-table td.ghost-table__cell--muted {
+  color: var(--ghost-color-text-muted);
+}
+
+.ghost-table td.ghost-table__cell--actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ─── Skeleton rows ───────────────────────────────── */
+.ghost-table .ghost-skeleton {
+  display: inline-block;
+  height: 0.875rem;
+  border-radius: var(--ghost-radius-sm);
+}

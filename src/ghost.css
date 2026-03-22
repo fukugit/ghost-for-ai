@@ -1,0 +1,23 @@
+/*!
+ * ghost-for-ai v0.1.0
+ * Lightweight CSS components and animations for AI-powered interfaces.
+ * https://github.com/fukumayouhei/ghost-for-ai
+ * MIT License
+ */
+
+/* Base */
+@import './base/_variables.css';
+@import './base/_reset.css';
+
+/* Animations (keyframes first) */
+@import './animations/_keyframes.css';
+@import './animations/_ghost.css';
+@import './animations/_typing.css';
+@import './animations/_fade.css';
+
+/* Components */
+@import './components/_button.css';
+@import './components/_badge.css';
+@import './components/_table.css';
+@import './components/_card.css';
+@import './components/_chat.css';

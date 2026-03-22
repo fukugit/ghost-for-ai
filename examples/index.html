@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ghost-for-ai — Examples</title>
+
+  <!--
+    CDN (after npm publish):
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ghost-for-ai/dist/ghost.min.css">
+  -->
+  <link rel="stylesheet" href="../dist/ghost.min.css">
+
+  <style>
+    /* ── Page layout only (not part of the library) ── */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background: #ffedc7;
+      color: var(--ghost-color-text);
+      min-height: 100vh;
+    }
+
+    .page-header {
+      border-bottom: 1px solid rgb(255 255 255 / 0.15);
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #eb4c4c;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .page-header__inner {
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .page-header h1 { margin: 0; font-size: 1.125rem; font-weight: 700; color: #fff; }
+    .page-header p  { margin: 0; font-size: 0.875rem; color: rgb(255 255 255 / 0.7); }
+
+    .nav {
+      display: flex;
+      gap: 0.25rem;
+      margin-left: auto;
+    }
+    .nav a {
+      font-size: 0.8125rem;
+      padding: 0.375rem 0.75rem;
+      border-radius: var(--ghost-radius);
+      color: rgb(255 255 255 / 0.75);
+      text-decoration: none;
+      transition: background var(--ghost-transition), color var(--ghost-transition);
+    }
+    .nav a:hover, .nav a.active {
+      background: rgb(255 255 255 / 0.15);
+      color: #fff;
+    }
+
+    .layout-outer {
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      min-height: calc(100vh - 61px);
+    }
+
+    .sidebar {
+      border-right: 1px solid rgb(255 255 255 / 0.1);
+      padding: 1.5rem 1rem;
+      position: sticky;
+      top: 61px;
+      height: calc(100vh - 61px);
+      overflow-y: auto;
+      background: #ff7070;
+    }
+    .sidebar-section { margin-bottom: 1.5rem; }
+    .sidebar-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgb(255 255 255 / 0.5);
+      padding: 0 0.5rem;
+      margin-bottom: 0.375rem;
+    }
+    .sidebar a {
+      display: block;
+      padding: 0.3125rem 0.5rem;
+      font-size: 0.8125rem;
+      color: rgb(255 255 255 / 0.75);
+      text-decoration: none;
+      border-radius: var(--ghost-radius-sm);
+      transition: background var(--ghost-transition), color var(--ghost-transition);
+    }
+    .sidebar a:hover {
+      background: rgb(255 255 255 / 0.15);
+      color: #fff;
+    }
+
+    .main {
+      padding: 2.5rem 2rem;
+    }
+
+    .section { margin-bottom: 3rem; }
+    .section-title {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ghost-color-text-muted);
+      margin: 0 0 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--ghost-color-border);
+    }
+
+    .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.625rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .code-block {
+      background: var(--ghost-color-surface);
+      border: 1px solid var(--ghost-color-border);
+      border-radius: var(--ghost-radius-lg);
+      padding: 1rem 1.25rem;
+      font-family: ui-monospace, 'Cascadia Code', monospace;
+      font-size: 0.8125rem;
+      line-height: 1.7;
+      color: var(--ghost-color-text-muted);
+      overflow-x: auto;
+      margin-top: 1rem;
+      white-space: pre;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────────── -->
+<header class="page-header">
+  <div class="page-header__inner">
+    <div>
+      <h1>ghost-for-ai</h1>
+      <p>CSS components &amp; animations for AI interfaces</p>
+    </div>
+    <nav class="nav">
+      <a href="#buttons">Buttons</a>
+      <a href="#badges">Badges</a>
+      <a href="#tables">Tables</a>
+      <a href="#cards">Cards</a>
+      <a href="#skeleton">Skeleton</a>
+      <a href="#chat">Chat</a>
+      <a href="#animations">Animations</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout-outer">
+<div class="layout">
+
+  <!-- ── Sidebar ──────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Getting started</div>
+      <a href="#install">Install</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Components</div>
+      <a href="#buttons">Buttons</a>
+      <a href="#badges">Badges</a>
+      <a href="#tables">Tables</a>
+      <a href="#cards">Cards</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Animations</div>
+      <a href="#skeleton">Skeleton</a>
+      <a href="#typing">Typing</a>
+      <a href="#animations">Fade &amp; Slide</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Patterns</div>
+      <a href="#chat">Chat UI</a>
+      <a href="#ai-card">AI Response Card</a>
+    </div>
+  </aside>
+
+  <!-- ── Main ─────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- Install -->
+    <section class="section" id="install">
+      <p class="section-title">Getting started</p>
+      <div class="code-block">&lt;!-- CDN --&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ghost-for-ai/dist/ghost.min.css"&gt;
+
+&lt;!-- npm --&gt;
+npm install ghost-for-ai</div>
+    </section>
+
+    <!-- Buttons -->
+    <section class="section" id="buttons">
+      <p class="section-title">Buttons</p>
+
+      <div class="demo-row">
+        <button class="ghost-btn ghost-btn--primary">Primary</button>
+        <button class="ghost-btn ghost-btn--secondary">Secondary</button>
+        <button class="ghost-btn ghost-btn--ghost">Ghost</button>
+        <button class="ghost-btn ghost-btn--danger">Danger</button>
+        <button class="ghost-btn ghost-btn--success">Success</button>
+      </div>
+
+      <div class="demo-row">
+        <button class="ghost-btn ghost-btn--primary ghost-btn--sm">Small</button>
+        <button class="ghost-btn ghost-btn--primary">Default</button>
+        <button class="ghost-btn ghost-btn--primary ghost-btn--lg">Large</button>
+      </div>
+
+      <div class="demo-row">
+        <button class="ghost-btn ghost-btn--primary ghost-btn--loading">Sending</button>
+        <button class="ghost-btn ghost-btn--secondary ghost-btn--loading">Processing</button>
+        <button class="ghost-btn ghost-btn--primary" disabled>Disabled</button>
+      </div>
+
+      <div class="code-block">&lt;button class="ghost-btn ghost-btn--primary"&gt;Primary&lt;/button&gt;
+&lt;button class="ghost-btn ghost-btn--secondary"&gt;Secondary&lt;/button&gt;
+&lt;button class="ghost-btn ghost-btn--ghost"&gt;Ghost&lt;/button&gt;
+&lt;button class="ghost-btn ghost-btn--primary ghost-btn--loading"&gt;Loading&lt;/button&gt;
+&lt;button class="ghost-btn ghost-btn--primary" disabled&gt;Disabled&lt;/button&gt;</div>
+    </section>
+
+    <!-- Badges -->
+    <section class="section" id="badges">
+      <p class="section-title">Badges</p>
+
+      <div class="demo-row">
+        <span class="ghost-badge ghost-badge--primary">Primary</span>
+        <span class="ghost-badge ghost-badge--secondary">Secondary</span>
+        <span class="ghost-badge ghost-badge--success">Success</span>
+        <span class="ghost-badge ghost-badge--warning">Warning</span>
+        <span class="ghost-badge ghost-badge--danger">Error</span>
+        <span class="ghost-badge ghost-badge--info">Info</span>
+      </div>
+
+      <div class="demo-row">
+        <span class="ghost-badge ghost-badge--thinking">Thinking</span>
+        <span class="ghost-badge ghost-badge--success ghost-badge--online">Online</span>
+        <span class="ghost-badge ghost-badge--secondary ghost-badge--offline">Offline</span>
+      </div>
+
+      <div class="code-block">&lt;span class="ghost-badge ghost-badge--success"&gt;Success&lt;/span&gt;
+&lt;span class="ghost-badge ghost-badge--thinking"&gt;Thinking&lt;/span&gt;
+&lt;span class="ghost-badge ghost-badge--success ghost-badge--online"&gt;Online&lt;/span&gt;</div>
+    </section>
+
+    <!-- Tables -->
+    <section class="section" id="tables">
+      <p class="section-title">Tables</p>
+
+      <div class="ghost-table-wrap">
+        <table class="ghost-table ghost-table--hover ghost-table--striped">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Provider</th>
+              <th>Context</th>
+              <th>Status</th>
+              <th class="ghost-table__cell--actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>claude-sonnet-4-6</td>
+              <td class="ghost-table__cell--muted">Anthropic</td>
+              <td class="ghost-table__cell--mono">200K</td>
+              <td><span class="ghost-badge ghost-badge--success">Active</span></td>
+              <td class="ghost-table__cell--actions">
+                <button class="ghost-btn ghost-btn--ghost ghost-btn--sm">Edit</button>
+              </td>
+            </tr>
+            <tr>
+              <td>gpt-4o</td>
+              <td class="ghost-table__cell--muted">OpenAI</td>
+              <td class="ghost-table__cell--mono">128K</td>
+              <td><span class="ghost-badge ghost-badge--warning">Beta</span></td>
+              <td class="ghost-table__cell--actions">
+                <button class="ghost-btn ghost-btn--ghost ghost-btn--sm">Edit</button>
+              </td>
+            </tr>
+            <tr>
+              <td>gemini-2.0-flash</td>
+              <td class="ghost-table__cell--muted">Google</td>
+              <td class="ghost-table__cell--mono">1M</td>
+              <td><span class="ghost-badge ghost-badge--secondary">Inactive</span></td>
+              <td class="ghost-table__cell--actions">
+                <button class="ghost-btn ghost-btn--ghost ghost-btn--sm">Edit</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="ghost-skeleton ghost-skeleton--text" style="width:55%"></span></td>
+              <td><span class="ghost-skeleton ghost-skeleton--text" style="width:45%"></span></td>
+              <td><span class="ghost-skeleton ghost-skeleton--text" style="width:30%"></span></td>
+              <td><span class="ghost-skeleton ghost-skeleton--badge" style="width:4rem"></span></td>
+              <td class="ghost-table__cell--actions"><span class="ghost-skeleton ghost-skeleton--button" style="width:3rem"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="code-block">&lt;div class="ghost-table-wrap"&gt;
+  &lt;table class="ghost-table ghost-table--hover ghost-table--striped"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;Model&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;claude-sonnet-4-6&lt;/td&gt;
+        &lt;td&gt;&lt;span class="ghost-badge ghost-badge--success"&gt;Active&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</div>
+    </section>
+
+    <!-- Cards -->
+    <section class="section" id="cards">
+      <p class="section-title">Cards</p>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem; max-width:680px">
+        <!-- Basic card -->
+        <div class="ghost-card">
+          <div class="ghost-card__header">
+            <span class="ghost-card__title">Usage Stats</span>
+            <span class="ghost-badge ghost-badge--info">Today</span>
+          </div>
+          <div class="ghost-card__body">
+            <p style="margin:0; font-size:2rem; font-weight:700">1,284</p>
+            <p style="margin:0.25rem 0 0; font-size:0.8125rem; color:var(--ghost-color-text-muted)">API calls</p>
+          </div>
+          <div class="ghost-card__footer">
+            <button class="ghost-btn ghost-btn--ghost ghost-btn--sm">View details</button>
+          </div>
+        </div>
+
+        <!-- AI card -->
+        <div class="ghost-card ghost-card--ai" id="ai-card">
+          <div class="ghost-card__header">
+            <span class="ghost-card__title">AI Response</span>
+            <span class="ghost-badge ghost-badge--thinking">Thinking</span>
+          </div>
+          <div class="ghost-card__body">
+            <p style="margin:0; font-size:0.875rem; line-height:1.7">
+              This is a streamed response from the model.
+              <span class="ghost-cursor"></span>
+            </p>
+          </div>
+          <div class="ghost-card__footer">
+            <button class="ghost-btn ghost-btn--ghost ghost-btn--sm">Copy</button>
+            <button class="ghost-btn ghost-btn--ghost ghost-btn--sm">Regenerate</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">&lt;div class="ghost-card ghost-card--ai"&gt;
+  &lt;div class="ghost-card__header"&gt;
+    &lt;span class="ghost-card__title"&gt;AI Response&lt;/span&gt;
+    &lt;span class="ghost-badge ghost-badge--thinking"&gt;Thinking&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="ghost-card__body"&gt;
+    &lt;p&gt;Streamed text here &lt;span class="ghost-cursor"&gt;&lt;/span&gt;&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="ghost-card__footer"&gt;
+    &lt;button class="ghost-btn ghost-btn--ghost ghost-btn--sm"&gt;Copy&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</div>
+    </section>
+
+    <!-- Skeleton -->
+    <section class="section" id="skeleton">
+      <p class="section-title">Skeleton loading</p>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; max-width:680px">
+        <!-- Profile skeleton -->
+        <div class="ghost-card">
+          <div class="ghost-card__body">
+            <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:1rem">
+              <span class="ghost-skeleton ghost-skeleton--avatar"></span>
+              <div style="flex:1; display:flex; flex-direction:column; gap:0.4rem">
+                <span class="ghost-skeleton ghost-skeleton--text" style="width:55%"></span>
+                <span class="ghost-skeleton ghost-skeleton--text" style="width:35%"></span>
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:0.4rem">
+              <span class="ghost-skeleton ghost-skeleton--text" style="width:100%"></span>
+              <span class="ghost-skeleton ghost-skeleton--text" style="width:88%"></span>
+              <span class="ghost-skeleton ghost-skeleton--text" style="width:70%"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttons / badges skeleton -->
+        <div class="ghost-card">
+          <div class="ghost-card__body" style="display:flex;flex-direction:column;gap:0.75rem">
+            <span class="ghost-skeleton ghost-skeleton--title" style="width:60%"></span>
+            <div style="display:flex;gap:0.5rem">
+              <span class="ghost-skeleton ghost-skeleton--badge" style="width:4rem"></span>
+              <span class="ghost-skeleton ghost-skeleton--badge" style="width:3rem"></span>
+              <span class="ghost-skeleton ghost-skeleton--badge" style="width:5rem"></span>
+            </div>
+            <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
+              <span class="ghost-skeleton ghost-skeleton--button" style="width:6rem"></span>
+              <span class="ghost-skeleton ghost-skeleton--button" style="width:4rem"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">&lt;!-- Text --&gt;
+&lt;span class="ghost-skeleton ghost-skeleton--text" style="width:80%"&gt;&lt;/span&gt;
+
+&lt;!-- Avatar --&gt;
+&lt;span class="ghost-skeleton ghost-skeleton--avatar"&gt;&lt;/span&gt;
+
+&lt;!-- Button --&gt;
+&lt;span class="ghost-skeleton ghost-skeleton--button" style="width:6rem"&gt;&lt;/span&gt;
+
+&lt;!-- Badge --&gt;
+&lt;span class="ghost-skeleton ghost-skeleton--badge" style="width:4rem"&gt;&lt;/span&gt;</div>
+    </section>
+
+    <!-- Typing -->
+    <section class="section" id="typing">
+      <p class="section-title">Typing &amp; Cursor</p>
+
+      <div class="demo-row" style="align-items:flex-start; flex-wrap:wrap; gap:1rem">
+        <div class="ghost-typing">
+          <span class="ghost-typing__dot"></span>
+          <span class="ghost-typing__dot"></span>
+          <span class="ghost-typing__dot"></span>
+        </div>
+
+        <p style="margin:0; font-size:0.9rem">
+          AI is generating a response<span class="ghost-cursor"></span>
+        </p>
+      </div>
+
+      <div class="code-block">&lt;!-- Typing indicator --&gt;
+&lt;div class="ghost-typing"&gt;
+  &lt;span class="ghost-typing__dot"&gt;&lt;/span&gt;
+  &lt;span class="ghost-typing__dot"&gt;&lt;/span&gt;
+  &lt;span class="ghost-typing__dot"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Cursor blink --&gt;
+&lt;span class="ghost-cursor"&gt;&lt;/span&gt;</div>
+    </section>
+
+    <!-- Animations -->
+    <section class="section" id="animations">
+      <p class="section-title">Fade &amp; Slide</p>
+
+      <div class="demo-row">
+        <div class="ghost-card ghost-fade-in" style="padding:0.75rem 1rem; font-size:0.875rem">
+          ghost-fade-in
+        </div>
+        <div class="ghost-card ghost-slide-in-up" style="padding:0.75rem 1rem; font-size:0.875rem; animation-delay:0.1s; animation-fill-mode:both">
+          ghost-slide-in-up
+        </div>
+        <div class="ghost-card ghost-slide-in-right" style="padding:0.75rem 1rem; font-size:0.875rem; animation-delay:0.2s; animation-fill-mode:both">
+          ghost-slide-in-right
+        </div>
+      </div>
+
+      <div style="margin-top:1rem">
+        <p style="font-size:0.8125rem; color:var(--ghost-color-text-muted); margin:0 0 0.75rem">Staggered list (<code>ghost-stagger</code>):</p>
+        <ul class="ghost-stagger" style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.375rem; max-width:280px">
+          <li class="ghost-card" style="padding:0.625rem 1rem; font-size:0.875rem">Item 1</li>
+          <li class="ghost-card" style="padding:0.625rem 1rem; font-size:0.875rem">Item 2</li>
+          <li class="ghost-card" style="padding:0.625rem 1rem; font-size:0.875rem">Item 3</li>
+          <li class="ghost-card" style="padding:0.625rem 1rem; font-size:0.875rem">Item 4</li>
+        </ul>
+      </div>
+
+      <div class="code-block">&lt;div class="ghost-fade-in"&gt;...&lt;/div&gt;
+&lt;div class="ghost-slide-in-up"&gt;...&lt;/div&gt;
+&lt;div class="ghost-slide-in-right"&gt;...&lt;/div&gt;
+&lt;span class="ghost-pulse"&gt;...&lt;/span&gt;
+
+&lt;!-- Staggered children --&gt;
+&lt;ul class="ghost-stagger"&gt;
+  &lt;li&gt;Item 1&lt;/li&gt;
+  &lt;li&gt;Item 2&lt;/li&gt;
+  &lt;li&gt;Item 3&lt;/li&gt;
+&lt;/ul&gt;</div>
+    </section>
+
+    <!-- Chat -->
+    <section class="section" id="chat">
+      <p class="section-title">Chat UI</p>
+
+      <div style="max-width:520px">
+        <div class="ghost-chat ghost-stagger" style="margin-bottom:1rem">
+          <div class="ghost-chat__message ghost-chat__message--user">
+            <div class="ghost-chat__avatar">You</div>
+            <div>
+              <div class="ghost-chat__bubble">What is ghost-for-ai?</div>
+              <div class="ghost-chat__time">12:00 PM</div>
+            </div>
+          </div>
+          <div class="ghost-chat__message ghost-chat__message--ai">
+            <div class="ghost-chat__avatar">AI</div>
+            <div>
+              <div class="ghost-chat__bubble">
+                A lightweight CSS component library designed for building AI-powered interfaces — buttons, badges, tables, cards, and animations out of the box.
+              </div>
+              <div class="ghost-chat__time">12:00 PM</div>
+            </div>
+          </div>
+          <div class="ghost-chat__message ghost-chat__message--ai">
+            <div class="ghost-chat__avatar">AI</div>
+            <div class="ghost-typing">
+              <span class="ghost-typing__dot"></span>
+              <span class="ghost-typing__dot"></span>
+              <span class="ghost-typing__dot"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ghost-chat__input-wrap">
+          <textarea
+            class="ghost-chat__input"
+            rows="1"
+            placeholder="Ask anything…"
+          ></textarea>
+          <button class="ghost-btn ghost-btn--primary ghost-btn--sm">Send</button>
+        </div>
+      </div>
+
+      <div class="code-block">&lt;div class="ghost-chat"&gt;
+  &lt;div class="ghost-chat__message ghost-chat__message--user"&gt;
+    &lt;div class="ghost-chat__avatar"&gt;You&lt;/div&gt;
+    &lt;div&gt;
+      &lt;div class="ghost-chat__bubble"&gt;Hello!&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="ghost-chat__message ghost-chat__message--ai"&gt;
+    &lt;div class="ghost-chat__avatar"&gt;AI&lt;/div&gt;
+    &lt;div class="ghost-typing"&gt;
+      &lt;span class="ghost-typing__dot"&gt;&lt;/span&gt;
+      &lt;span class="ghost-typing__dot"&gt;&lt;/span&gt;
+      &lt;span class="ghost-typing__dot"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="ghost-chat__input-wrap"&gt;
+  &lt;textarea class="ghost-chat__input" placeholder="Ask anything…"&gt;&lt;/textarea&gt;
+  &lt;button class="ghost-btn ghost-btn--primary ghost-btn--sm"&gt;Send&lt;/button&gt;
+&lt;/div&gt;</div>
+    </section>
+
+  </main>
+</div>
+</div>
+
+</body>
+</html>

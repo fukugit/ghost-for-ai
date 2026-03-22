@@ -1,0 +1,13 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.ghost-btn,
+.ghost-badge,
+.ghost-table,
+.ghost-card {
+  font-family: var(--ghost-font-sans);
+  font-size: var(--ghost-font-size-base);
+  line-height: 1.5;
+  color: var(--ghost-color-text);
+}
